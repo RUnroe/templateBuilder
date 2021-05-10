@@ -37,3 +37,10 @@ button.top-level {
 .row input {
     flex:1;
 }
+
+.btn-group {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 2em;
+}
