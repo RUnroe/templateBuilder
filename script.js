@@ -42,7 +42,7 @@ const createNewElement = isNested => {
 
     let contentInput = document.createElement("input");
     contentInput.type = "text";
-    contentInput.classList = "id";
+    contentInput.classList = "content";
     contentInput.placeholder = "InnerHTML (put in quotes for string)";
     rowTwo.appendChild(contentInput);
 
@@ -74,17 +74,38 @@ const removeItem = id => {
 
 //create json object from DOM
 const getDocumentObject = () => {
-    let object = [];
+    let elementList = [];
     console.log(document.getElementById("topLevel").childNodes);
     document.getElementById("topLevel").childNodes.forEach(child => {
-        
+        elementList.push(createJsonElement(child));
+
     });
+    console.log(elementList);
+    return elementList;
 }
+
+//Allow period seperators later
+const createJsonElement = (object) => {
+    let element = {
+        type:     object.childNodes[0].childNodes[0].value,
+        name:     object.childNodes[0].childNodes[1].value,
+        classes:  object.childNodes[0].childNodes[2].value ? object.childNodes[0].childNodes[2].value.trim().split(" ") : null,
+        id:       object.childNodes[1].childNodes[0].value,
+        content:  object.childNodes[1].childNodes[1].value,
+        children: []
+    }
+    for(let i = 3; i < object.childElementCount; i++) {
+        element.children.push(createJsonElement(object.childNodes[i]));
+    }
+    return element;
+}
+
+
 
 const exportToHTML = () => {
     let documentObject = getDocumentObject();
     let html = "";
-
+    html = documentObject;
 
     document.getElementById("output").innerHTML = html;
 }
