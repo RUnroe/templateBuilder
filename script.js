@@ -122,7 +122,7 @@ const exportToJS = () => {
 }
 
 const createJsElement = (element, parentName) => {
-    let string = `let ${element.name} = document.createElement(${element.type});<br>`;
+    let string = `let ${element.name} = document.createElement("${element.type}");<br>`;
     if(element.classes) element.classes.forEach(className => {
         string += `${element.name}.classList.add("${className}");<br>`;
     });
