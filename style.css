@@ -4,7 +4,36 @@
     flex-direction: row;
 }
 
+.element-item {
+    border:2px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1em;
+    padding:1em;
+    box-sizing: border-box;
+}
+
 .nested {
     margin-left:2em;
 }
 
+.add {
+    width:100%;
+}
+
+button.top-level {
+    margin: 0 auto;
+    display:block;
+    width:80%;
+    padding:0.5em;
+}
+
+.content {
+    max-width: 900px;
+    margin: 0 auto;
+    display:block;
+}
+
+
+.row input {
+    flex:1;
+}
