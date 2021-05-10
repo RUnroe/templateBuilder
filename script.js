@@ -31,7 +31,7 @@ const createNewElement = isNested => {
     let classesInput = document.createElement("input");
     classesInput.type = "text";
     classesInput.classList = "classes";
-    classesInput.placeholder = "Classes (separate by , or space)";
+    classesInput.placeholder = "Classes (separate space)";
     rowOne.appendChild(classesInput);
 
     let idInput = document.createElement("input");
@@ -87,10 +87,10 @@ const getDocumentObject = () => {
 //Allow period seperators later
 const createJsonElement = (object) => {
     let element = {
-        type:     object.childNodes[0].childNodes[0].value,
-        name:     object.childNodes[0].childNodes[1].value,
+        type:     object.childNodes[0].childNodes[0].value.trim(),
+        name:     object.childNodes[0].childNodes[1].value.trim(),
         classes:  object.childNodes[0].childNodes[2].value ? object.childNodes[0].childNodes[2].value.trim().split(" ") : null,
-        id:       object.childNodes[1].childNodes[0].value,
+        id:       object.childNodes[1].childNodes[0].value.trim(),
         content:  object.childNodes[1].childNodes[1].value,
         children: []
     }
@@ -105,19 +105,40 @@ const createJsonElement = (object) => {
 const exportToHTML = () => {
     let documentObject = getDocumentObject();
     let html = "";
-    html = documentObject;
+    
 
     document.getElementById("output").innerHTML = html;
 }
 
 const exportToJS = () => {
+    let documentObject = getDocumentObject();
     let js = "";
-
+    documentObject.forEach(element => {
+        js += createJsElement(element);
+    });
+    
 
     document.getElementById("output").innerHTML = js;
 }
 
+const createJsElement = (element, parentName) => {
+    let string = `let ${element.name} = document.createElement(${element.type});<br>`;
+    if(element.classes) element.classes.forEach(className => {
+        string += `${element.name}.classList.add("${className}");<br>`;
+    });
+    if(element.id) string += `${element.name}.id = ${element.id};<br>`;
+    if(element.content) string += `${element.name}.innerHTML = ${element.content};<br>`;
+    string += "<br>";
 
+    if(element.children) {
+        element.children.forEach(child => {
+            string += createJsElement(child, element.name);
+        });
+    }
+    if(parentName) string += `${parentName}.appendChild(${element.name});<br>`;
+
+    return string;
+}
 
 
 
