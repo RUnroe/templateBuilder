@@ -9,19 +9,28 @@
     <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="content">
-        <header>
-            <h1>Template Builder</h1>
-        </header>
-        <div id="topLevel" class="main"><div class="children"></div></div>
-        <button id="addElement" class="add top-level">+</button>
+    <header class="topbar">
+        <h1>HTML Template Builder</h1>
         <div class="btn-group">
-            <button id="exportHTML">Export to HTML</button>
-            <button id="exportJS">Export to JS</button>
+            <button id="exportHTML" class="btn">Export to HTML</button>
+            <button id="exportJS" class="btn">Export to JS</button>
         </div>
-        <div id="output">
+    </header>
+    
+    <div class="main-section">
+        <div class="content">
+            <div id="topLevel" class="main"><div class="children"></div></div>
+            <button id="addElement" class="add top-level">+</button>
+            
+            <div id="output">
 
+            </div>
         </div>
     </div>
+
+    <div class="sidebar">
+
+    </div>
+
 </body>
 </html>
