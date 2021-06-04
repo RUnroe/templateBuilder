@@ -13,11 +13,13 @@ const createNewElement = isNested => {
     container.classList.add("element-item");
     if(isNested) container.classList.add("nested");
     container.id = `item${id++}`;
+    
+
     //select item after it has been created
     selectedItemId = container.id;
     let headerRow = document.createElement("div");
     headerRow.classList.add("header-row");
-
+    
 
     // let elementTypeInput = document.createElement("input");
     // elementTypeInput.type = "text";
@@ -52,10 +54,16 @@ const createNewElement = isNested => {
     const name = document.createElement("h3");
     name.classList.add("name");
     name.innerHTML = "Element";
+    name.title = "Click to Edit";
     headerRow.appendChild(name);
+    name.addEventListener("click", () => {
+        selectedItemId = container.id;
+        selectItem();
+    });
 
     let deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete");
+    deleteBtn.title = "Delete Element";
     deleteBtn.innerHTML = "&times;";
     deleteBtn.addEventListener("click", () => {
         removeItem(container.id);
@@ -70,6 +78,7 @@ const createNewElement = isNested => {
     nestBtn.classList.add("btn");
     nestBtn.classList.add("outline");
     nestBtn.innerHTML = "+";
+    nestBtn.title = "Add Element";
     nestBtn.addEventListener("click", () => {
         addElement(container.id, true);
     });
@@ -91,7 +100,7 @@ const selectItem = () => {
         prevSelectedElement.classList.remove("selected");
     });
     document.getElementById(selectedItemId).classList.add("selected");
-    
+
     //display proper data on side bar
 }
 

@@ -55,16 +55,20 @@ body {
 }
 
 .header-row {
-    display:flex;
+    display:grid;
+    grid-template-columns: 1fr 3rem;
     flex-direction: row;
-    justify-content: space-between;
     padding: 0 0.5rem;
     margin-bottom: 0.75rem;
-    align-items: center;
     border-bottom: 1px solid #ccc;
 }
 .header-row > h3 {
+    cursor:pointer;
     margin: 0;
+    align-self: center;
+}
+.header-row > button {
+    align-self: center;
 }
 
 
