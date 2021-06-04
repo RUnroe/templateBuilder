@@ -6,6 +6,7 @@
     --color-primary-light: #854afc;
     --color-primary-dark: #5e1fdb;
     --color-secondary: #36a1f8;
+    --color-danger: #eb4c4c;
 }
 
 html, body {
@@ -60,6 +61,7 @@ body {
     padding: 0 0.5rem;
     margin-bottom: 0.75rem;
     align-items: center;
+    border-bottom: 1px solid #ccc;
 }
 .header-row > h3 {
     margin: 0;
@@ -89,7 +91,6 @@ body {
 button.top-level {
     margin: 0 auto;
     display:block;
-    width:80%;
     padding:0.5em;
 }
 
@@ -119,6 +120,21 @@ button.top-level {
 }
 .btn:hover {
     background-color: var(--color-primary-light);
+}
+
+.delete {
+    font-weight: bold;
+    font-size: 1.6rem;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    outline: none;
+    padding: 0.25rem;
+    background-color: transparent;
+    transition: color 0.2s ease;
+}
+.delete:hover {
+    color: var(--color-danger);
 }
 
 

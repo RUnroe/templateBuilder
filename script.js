@@ -54,7 +54,7 @@ const createNewElement = isNested => {
 
     let deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete");
-    deleteBtn.innerHTML = "X";
+    deleteBtn.innerHTML = "&times;";
     deleteBtn.addEventListener("click", () => {
         removeItem(container.id);
     });
