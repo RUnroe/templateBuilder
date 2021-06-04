@@ -5,6 +5,7 @@ let selectedItemId = "";
 const addElement = (location, isNested) => {
     // document.getElementById(location).appendChild(createNewElement(isNested));
     document.getElementById(location).getElementsByClassName("children")[0].appendChild(createNewElement(isNested));
+    selectItem();
 }
 
 const createNewElement = isNested => {
@@ -12,7 +13,8 @@ const createNewElement = isNested => {
     container.classList.add("element-item");
     if(isNested) container.classList.add("nested");
     container.id = `item${id++}`;
-
+    //select item after it has been created
+    selectedItemId = container.id;
     let headerRow = document.createElement("div");
     headerRow.classList.add("header-row");
 
@@ -81,6 +83,16 @@ const createNewElement = isNested => {
 
 const removeItem = id => {
     document.getElementById(id).remove();
+}
+
+const selectItem = () => {
+    //update selected class on element-item divs
+    document.querySelectorAll(".element-item.selected").forEach(prevSelectedElement => {
+        prevSelectedElement.classList.remove("selected");
+    });
+    document.getElementById(selectedItemId).classList.add("selected");
+    
+    //display proper data on side bar
 }
 
 //create json object from DOM
