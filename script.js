@@ -60,6 +60,8 @@ const createNewElement = isNested => {
 
     let nestBtn = document.createElement("button");
     nestBtn.classList.add("add");
+    nestBtn.classList.add("btn");
+    nestBtn.classList.add("outline");
     nestBtn.innerHTML = "+";
     nestBtn.addEventListener("click", () => {
         addElement(container.id, true);
