@@ -104,6 +104,75 @@ const selectItem = () => {
     //display proper data on side bar
 }
 
+const convertTagType = tag => {
+    switch(tag) {
+        case "p":
+        case "h1":
+        case "h2":
+        case "h3":
+        case "h4":
+        case "h5":
+        case "h6":
+        case "span":
+        return "text";
+        
+        case "div":
+        case "header":
+        case "footer":
+        case "section":
+        case "article":
+        return "container";
+    }
+    return tag;
+}
+
+const getRestrictedFields = tag => {
+    switch(tag) {
+        case "form":
+        case "container":
+        case "text": 
+        return ["src", "alt", "href", "type", "name"];
+        case "a":
+        return ["src", "alt", "type", "name"];
+        case "button": 
+        return ["src", "alt", "href", "type"];
+        case "img":
+        return ["innerHTML", "href", "type", "name"];
+        case "input":
+        return ["src", "href", "alt"];
+    }
+}
+
+
+//Have all fields. Disable as needed.
+const updateOptions = (tag) => {
+    const tagType = convertTagType(tag);
+    const restrictedFields = getRestrictedFields(tagType);
+    
+    //enable all fields
+
+
+    //elementName, id, classlist, title, innerHTML, src, href, alt, type, name, eventListener
+    //Make innerHTML => value for inputs
+
+    //All => name, id, classlist, title
+    //Text (p, h1-6, span) => innerHTML
+    //a => innerHTML, href
+    //div, footer, header => innerHTML
+    //button => innerHTML  
+    //img => src, alt
+    //form => 
+    //input => type, name, innerHTML
+
+}
+
+const createOptions = () => {
+    const options = [
+        {name: "elementName",}
+    ]
+}
+
+
 //create json object from DOM
 const getDocumentObject = () => {
     let elementList = [];
@@ -200,3 +269,5 @@ document.getElementById("exportHTML").addEventListener("click", () => {
 document.getElementById("exportJS").addEventListener("click", () => {
     exportToJS();
 });
+
+createOptions();
