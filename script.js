@@ -1,5 +1,6 @@
 let id = 0;
 let tempCount = 0;
+let selectedItemId = "";
 
 const addElement = (location, isNested) => {
     // document.getElementById(location).appendChild(createNewElement(isNested));
@@ -10,42 +11,46 @@ const createNewElement = isNested => {
     let container = document.createElement("div");
     container.classList.add("element-item");
     if(isNested) container.classList.add("nested");
-    container.id = id++;
+    container.id = `item${id++}`;
 
-    let rowOne = document.createElement("div");
-    rowOne.classList.add("row");
-    let rowTwo = document.createElement("div");
-    rowTwo.classList.add("row");
+    let headerRow = document.createElement("div");
+    headerRow.classList.add("header-row");
 
-    let elementTypeInput = document.createElement("input");
-    elementTypeInput.type = "text";
-    elementTypeInput.classList = "element-type";
-    elementTypeInput.placeholder = "Element Type";
-    rowOne.appendChild(elementTypeInput);
 
-    let nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.classList = "name";
-    nameInput.placeholder = "Name";
-    rowOne.appendChild(nameInput);
+    // let elementTypeInput = document.createElement("input");
+    // elementTypeInput.type = "text";
+    // elementTypeInput.classList = "element-type";
+    // elementTypeInput.placeholder = "Element Type";
+    // headerRow.appendChild(elementTypeInput);
 
-    let classesInput = document.createElement("input");
-    classesInput.type = "text";
-    classesInput.classList = "classes";
-    classesInput.placeholder = "Classes (separate space)";
-    rowOne.appendChild(classesInput);
+    // let nameInput = document.createElement("input");
+    // nameInput.type = "text";
+    // nameInput.classList = "name";
+    // nameInput.placeholder = "Name";
+    // headerRow.appendChild(nameInput);
 
-    let idInput = document.createElement("input");
-    idInput.type = "text";
-    idInput.classList = "id";
-    idInput.placeholder = "ID (put in quotes for string)";
-    rowTwo.appendChild(idInput);
+    // let classesInput = document.createElement("input");
+    // classesInput.type = "text";
+    // classesInput.classList = "classes";
+    // classesInput.placeholder = "Classes (separate space)";
+    // headerRow.appendChild(classesInput);
 
-    let contentInput = document.createElement("input");
-    contentInput.type = "text";
-    contentInput.classList = "content";
-    contentInput.placeholder = "InnerHTML (put in quotes for string)";
-    rowTwo.appendChild(contentInput);
+    // let idInput = document.createElement("input");
+    // idInput.type = "text";
+    // idInput.classList = "id";
+    // idInput.placeholder = "ID (put in quotes for string)";
+    // rowTwo.appendChild(idInput);
+
+    // let contentInput = document.createElement("input");
+    // contentInput.type = "text";
+    // contentInput.classList = "content";
+    // contentInput.placeholder = "InnerHTML (put in quotes for string)";
+    // rowTwo.appendChild(contentInput);
+
+    const name = document.createElement("h3");
+    name.classList.add("name");
+    name.innerHTML = "Element";
+    headerRow.appendChild(name);
 
     let deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete");
@@ -53,7 +58,7 @@ const createNewElement = isNested => {
     deleteBtn.addEventListener("click", () => {
         removeItem(container.id);
     });
-    rowOne.appendChild(deleteBtn);
+    headerRow.appendChild(deleteBtn);
 
     const childrenContainer = document.createElement("div");
     childrenContainer.classList.add("children");
@@ -67,8 +72,7 @@ const createNewElement = isNested => {
         addElement(container.id, true);
     });
 
-    container.appendChild(rowOne);
-    container.appendChild(rowTwo);
+    container.appendChild(headerRow);
     container.appendChild(childrenContainer);
     container.appendChild(nestBtn);
     return container;

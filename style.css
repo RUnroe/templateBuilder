@@ -5,6 +5,7 @@
     --color-primary: #7530ff;
     --color-primary-light: #854afc;
     --color-primary-dark: #5e1fdb;
+    --color-secondary: #36a1f8;
 }
 
 html, body {
@@ -52,10 +53,18 @@ body {
     padding:0 0.5rem;
 }
 
-.row {
+.header-row {
     display:flex;
     flex-direction: row;
+    justify-content: space-between;
+    padding: 0 0.5rem;
+    margin-bottom: 0.75rem;
+    align-items: center;
 }
+.header-row > h3 {
+    margin: 0;
+}
+
 
 .element-item {
     border:2px solid #ccc;
@@ -63,6 +72,10 @@ body {
     margin-bottom: 1em;
     padding:1em;
     box-sizing: border-box;
+}
+
+.element-item.selected {
+    border-color: var(--color-secondary);
 }
 
 .nested {
@@ -88,9 +101,7 @@ button.top-level {
 }
 
 
-.row input {
-    flex:1;
-}
+
 
 .btn {
     color: var(--color-text-primary);
