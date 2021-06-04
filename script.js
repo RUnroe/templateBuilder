@@ -1,8 +1,9 @@
 let id = 0;
-
+let tempCount = 0;
 
 const addElement = (location, isNested) => {
-    document.getElementById(location).appendChild(createNewElement(isNested));
+    // document.getElementById(location).appendChild(createNewElement(isNested));
+    document.getElementById(location).getElementsByClassName("children")[0].appendChild(createNewElement(isNested));
 }
 
 const createNewElement = isNested => {
@@ -54,6 +55,9 @@ const createNewElement = isNested => {
     });
     rowOne.appendChild(deleteBtn);
 
+    const childrenContainer = document.createElement("div");
+    childrenContainer.classList.add("children");
+
     let nestBtn = document.createElement("button");
     nestBtn.classList.add("add");
     nestBtn.innerHTML = "+";
@@ -63,6 +67,7 @@ const createNewElement = isNested => {
 
     container.appendChild(rowOne);
     container.appendChild(rowTwo);
+    container.appendChild(childrenContainer);
     container.appendChild(nestBtn);
     return container;
 }
@@ -76,7 +81,8 @@ const removeItem = id => {
 const getDocumentObject = () => {
     let elementList = [];
     console.log(document.getElementById("topLevel").childNodes);
-    document.getElementById("topLevel").childNodes.forEach(child => {
+    document.getElementById("topLevel").childNodes[0].childNodes.forEach(child => {
+        console.log(child);
         elementList.push(createJsonElement(child));
 
     });
@@ -94,8 +100,8 @@ const createJsonElement = (object) => {
         content:  object.childNodes[1].childNodes[1].value,
         children: []
     }
-    for(let i = 3; i < object.childElementCount; i++) {
-        element.children.push(createJsonElement(object.childNodes[i]));
+    for(let i = 0; i < object.childNodes[2].childElementCount; i++) {
+        element.children.push(createJsonElement(object.childNodes[2].childNodes[i]));
     }
     return element;
 }
@@ -111,6 +117,7 @@ const exportToHTML = () => {
 }
 
 const exportToJS = () => {
+    tempCount = 0;
     let documentObject = getDocumentObject();
     let js = "";
     documentObject.forEach(element => {
@@ -122,6 +129,18 @@ const exportToJS = () => {
 }
 
 const createJsElement = (element, parentName) => {
+    //Replace name if it start 
+    const nameRegex = /^[a-zA-Z].*/;
+    let name = element.name.trim();
+    if(name) {
+        if(!nameRegex.test(name)) {
+        name = `temp${tempCount++}`;
+      }
+    } 
+    else name = `temp${tempCount++}`;
+
+
+    console.log(name);
     let string = `let ${element.name} = document.createElement("${element.type}");<br>`;
     if(element.classes) element.classes.forEach(className => {
         string += `${element.name}.classList.add("${className}");<br>`;
