@@ -2,6 +2,20 @@ let id = 0;
 let tempCount = 0;
 let selectedItemId = "";
 
+const textFields = [
+    { name: "element Name", description: "Alias for element"}, 
+    { name: "id", description: "Unique identifier"},
+    { name: "class List", description: "List of classes (separate by spaces)"},
+    { name: "title", description: "Information shown on hover"},
+    { name: "innerHTML", description: "Content inside of element (overrides children)"},
+    { name: "src", description: "URL of a media file"},
+    { name: "href", description: "URL of a page"},
+    { name: "alt", description: "Alternate text when element fails to display"},
+    { name: "type", description: "Type of input"},
+    { name: "name", description: "Name of element (used in forms)"}
+];
+
+
 const addElement = (location, isNested) => {
     // document.getElementById(location).appendChild(createNewElement(isNested));
     document.getElementById(location).getElementsByClassName("children")[0].appendChild(createNewElement(isNested));
@@ -167,9 +181,23 @@ const updateOptions = (tag) => {
 }
 
 const createOptions = () => {
-    const options = [
-        {name: "elementName",}
-    ]
+    let optionsString = "";
+    textFields.forEach(field => {
+        let id = field.name.replaceAll(" ", "");
+        optionsString += `
+        <div class="option-field" title="${field.description}">
+            <label for="${id}Input">${field.name}:</label>
+            <input type="text" id="${id}Input" />
+        </div>`;
+    });
+    optionsString += `
+    <div class="option-field">
+        <button class="btn outline" id="eventListenerBtn">Event Listener</button>
+    </div>
+    <div class="option-field">
+        <button class="btn outline" id="datasetBtn">Dataset</button>
+    </div>`;
+    document.getElementById("optionSection").innerHTML = optionsString;
 }
 
 
