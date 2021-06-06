@@ -23,7 +23,8 @@ const addElement = (location, isNested) => {
 }
 
 const createNewElement = isNested => {
-    let container = document.createElement("div");
+    const container = document.createElement("div");
+    container.dataset.tagName = "div"; //temporary;
     container.classList.add("element-item");
     if(isNested) container.classList.add("nested");
     container.id = `item${id++}`;
@@ -31,39 +32,8 @@ const createNewElement = isNested => {
 
     //select item after it has been created
     selectedItemId = container.id;
-    let headerRow = document.createElement("div");
+    const headerRow = document.createElement("div");
     headerRow.classList.add("header-row");
-    
-
-    // let elementTypeInput = document.createElement("input");
-    // elementTypeInput.type = "text";
-    // elementTypeInput.classList = "element-type";
-    // elementTypeInput.placeholder = "Element Type";
-    // headerRow.appendChild(elementTypeInput);
-
-    // let nameInput = document.createElement("input");
-    // nameInput.type = "text";
-    // nameInput.classList = "name";
-    // nameInput.placeholder = "Name";
-    // headerRow.appendChild(nameInput);
-
-    // let classesInput = document.createElement("input");
-    // classesInput.type = "text";
-    // classesInput.classList = "classes";
-    // classesInput.placeholder = "Classes (separate space)";
-    // headerRow.appendChild(classesInput);
-
-    // let idInput = document.createElement("input");
-    // idInput.type = "text";
-    // idInput.classList = "id";
-    // idInput.placeholder = "ID (put in quotes for string)";
-    // rowTwo.appendChild(idInput);
-
-    // let contentInput = document.createElement("input");
-    // contentInput.type = "text";
-    // contentInput.classList = "content";
-    // contentInput.placeholder = "InnerHTML (put in quotes for string)";
-    // rowTwo.appendChild(contentInput);
 
     const name = document.createElement("h3");
     name.classList.add("name");
@@ -75,7 +45,7 @@ const createNewElement = isNested => {
         selectItem();
     });
 
-    let deleteBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("delete");
     deleteBtn.title = "Delete Element";
     deleteBtn.innerHTML = "&times;";
@@ -87,7 +57,7 @@ const createNewElement = isNested => {
     const childrenContainer = document.createElement("div");
     childrenContainer.classList.add("children");
 
-    let nestBtn = document.createElement("button");
+    const nestBtn = document.createElement("button");
     nestBtn.classList.add("add");
     nestBtn.classList.add("btn");
     nestBtn.classList.add("outline");
@@ -106,6 +76,8 @@ const createNewElement = isNested => {
 
 const removeItem = id => {
     document.getElementById(id).remove();
+    selectedItemId = "";
+    selectItem();
 }
 
 const selectItem = () => {
@@ -113,10 +85,36 @@ const selectItem = () => {
     document.querySelectorAll(".element-item.selected").forEach(prevSelectedElement => {
         prevSelectedElement.classList.remove("selected");
     });
-    document.getElementById(selectedItemId).classList.add("selected");
-
-    //display proper data on side bar
+    //if no item is selected, disable all fields 
+    if(!selectedItemId) {
+        disableAllOptions(true);
+    
+    }
+    //else, filter fields by type of element
+    else {
+        let selectedTagName = document.getElementById(selectedItemId).dataset.tagName;
+        //update attribute panel name
+        document.getElementById("elementTypeDisplay").innerHTML = selectedTagName;
+        //select element
+        document.getElementById(selectedItemId).classList.add("selected");
+        //enable all input fields
+        disableAllOptions(false);
+        //display proper data on side bar
+        updateOptions(document.getElementById(selectedItemId).dataset.tagName);
+    }
 }
+
+//true disables all option fields. false enables all option fields
+const disableAllOptions = boolValue => {
+    document.querySelectorAll(".option-field input").forEach(inputField => {
+        inputField.disabled = boolValue;
+    });
+    document.querySelectorAll(".option-field button").forEach(button => {
+        button.disabled = boolValue;
+    });
+}
+
+
 
 const convertTagType = tag => {
     switch(tag) {
@@ -162,21 +160,14 @@ const getRestrictedFields = tag => {
 const updateOptions = (tag) => {
     const tagType = convertTagType(tag);
     const restrictedFields = getRestrictedFields(tagType);
-    
-    //enable all fields
-
-
     //elementName, id, classlist, title, innerHTML, src, href, alt, type, name, eventListener
     //Make innerHTML => value for inputs
+    if(tag == "input") document.getElementById("innerHTMLInput").previousSibling.innerHTML = "value";
+    else document.getElementById("innerHTMLInput").previousSibling.innerHTML = "innerHTML";
 
-    //All => name, id, classlist, title
-    //Text (p, h1-6, span) => innerHTML
-    //a => innerHTML, href
-    //div, footer, header => innerHTML
-    //button => innerHTML  
-    //img => src, alt
-    //form => 
-    //input => type, name, innerHTML
+    restrictedFields.forEach(restrictedField => {
+        document.getElementById(`${restrictedField}Input`).disabled = true;
+    });
 
 }
 
@@ -198,6 +189,7 @@ const createOptions = () => {
         <button class="btn outline" id="datasetBtn">Dataset</button>
     </div>`;
     document.getElementById("optionSection").innerHTML = optionsString;
+    selectItem();
 }
 
 
@@ -265,7 +257,7 @@ const createJsElement = (element, parentName) => {
 
 
     console.log(name);
-    let string = `let ${element.name} = document.createElement("${element.type}");<br>`;
+    let string = `const ${element.name} = document.createElement("${element.type}");<br>`;
     if(element.classes) element.classes.forEach(className => {
         string += `${element.name}.classList.add("${className}");<br>`;
     });

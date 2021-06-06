@@ -1,5 +1,5 @@
 :root {
-    --color-body: #f5f5f5;
+    --color-body: #fff;
     /* --color-text-primary: #111;
     --color-text-secondary: #999; */
     /* --color-primary: #7530ff;
@@ -133,11 +133,16 @@ body {
     border:2px solid var(--color-primary-light);
     color: var(--color-text-primary);
 }
-.btn:hover {
+.btn:not(:disabled):hover {
     background-color: var(--color-primary-light);
 }
-.btn.outline:hover {
+.btn.outline:not(:disabled):hover {
     color: #fff;
+}
+
+button.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .delete {
@@ -171,6 +176,8 @@ body {
 .sidebar h3 {
     text-align: center;
     margin: 0.25rem 0;
+    font-weight: 400;
+    text-transform: uppercase;
 }
 
 .option-field {
@@ -191,7 +198,9 @@ body {
 .option-field > input:focus {
     border: 2px solid var(--color-secondary);
 }
-
+.option-field > input:disabled {
+    cursor: not-allowed;
+}
 .option-field > button {
     width:60%;
     margin: 0.5rem auto;
