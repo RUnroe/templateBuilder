@@ -12,8 +12,16 @@ const textFields = [
     { name: "href", description: "URL of a page"},
     { name: "alt", description: "Alternate text when element fails to display"},
     { name: "type", description: "Type of input"},
-    { name: "name", description: "Name of element (used in forms)"}
+    { name: "name", description: "Name of element (used in forms)"},
+    { name: "for", description: "ID of input field corresponding to label"}
 ];
+
+const elementTypes = [
+  {title: "Text", elementTypes: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span"]},
+  {title: "Container", elementTypes: ["div", "header", "footer", "section", "article"]},
+  {title: null, }
+];
+
 
 
 const addElement = (location, isNested) => {
@@ -143,15 +151,17 @@ const getRestrictedFields = tag => {
         case "form":
         case "container":
         case "text": 
-        return ["src", "alt", "href", "type", "name"];
+        return ["src", "alt", "href", "type", "name", "for"];
         case "a":
-        return ["src", "alt", "type", "name"];
+        return ["src", "alt", "type", "name", "for"];
         case "button": 
-        return ["src", "alt", "href", "type"];
+        return ["src", "alt", "href", "type", "for"];
         case "img":
-        return ["innerHTML", "href", "type", "name"];
+        return ["innerHTML", "href", "type", "name", "for"];
         case "input":
-        return ["src", "href", "alt"];
+        return ["src", "href", "alt", "for"];
+        case "label":
+        return ["src", "alt", "href", "type"];
     }
 }
 
@@ -160,7 +170,7 @@ const getRestrictedFields = tag => {
 const updateOptions = (tag) => {
     const tagType = convertTagType(tag);
     const restrictedFields = getRestrictedFields(tagType);
-    //elementName, id, classlist, title, innerHTML, src, href, alt, type, name, eventListener
+    //elementName, id, classlist, title, innerHTML, src, href, alt, type, name, for, eventListener
     //Make innerHTML => value for inputs
     if(tag == "input") document.getElementById("innerHTMLInput").previousSibling.innerHTML = "value";
     else document.getElementById("innerHTMLInput").previousSibling.innerHTML = "innerHTML";
@@ -275,6 +285,27 @@ const createJsElement = (element, parentName) => {
     return string;
 }
 
+
+const setModal = (type) => {
+    let modalHeader, modalBody;
+    switch(type) {
+        case "newElement": 
+            modalHeader = "Select Element Type"
+            modalBody
+        break;
+        case "dataset":
+            modalHeader = "Dataset";
+
+        break;
+        case "eventListener":
+            modalHeader = "Event Listeners"
+
+        break;
+    }
+    document.getElementById("modalHeader").innerHTML = `<h2>${modalHeader}</h2>`;
+    document.getElementById("modalBody").innerHTML = modalBody;
+    
+}
 
 
 
