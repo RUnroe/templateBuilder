@@ -318,26 +318,33 @@ const setNewElementModal = (location, isNestedFlag) => {
         });
         modalBody.appendChild(modalSection);
     });
-    //     break;
-    //     case "dataset":
-    //         modalHeader = "Dataset";
 
-    //     break;
-    //     case "eventListener":
-    //         modalHeader = "Event Listeners";
-
-    //     break;
-    // }
     document.getElementById("modalHeader").innerHTML = `<h2>${modalHeader}</h2>`;
     
 }
+
+const setDatasetModal = (currList) => {
+    document.getElementById("modalHeader").innerHTML = `<h2>Dataset</h2>`;
+
+}
+
+const setEventListenerModal = (currList) => {
+    document.getElementById("modalHeader").innerHTML = `<h2>Event Listeners</h2>`;
+
+}
+
+
 
 
 const showModal = () => {
     if(document.getElementById("modal").classList.contains("hidden"))  document.getElementById("modal").classList.remove("hidden");
 }
 const closeModal = () => {
-    if(!document.getElementById("modal").classList.contains("hidden"))  document.getElementById("modal").classList.add("hidden");
+    if(!document.getElementById("modal").classList.contains("hidden")) {
+        document.getElementById("modal").classList.add("hidden");
+        //clear modal body
+        document.getElementById("modalBody").innerHTML = "";  
+    }
 }
 
 document.getElementById("addElement").addEventListener("click", () => {
