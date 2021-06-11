@@ -100,6 +100,7 @@ const selectItem = () => {
     //if no item is selected, disable all fields 
     if(!selectedItemId) {
         disableAllOptions(true);
+        document.getElementById("elementTypeDisplay").innerHTML = "";
     
     }
     //else, filter fields by type of element
@@ -120,6 +121,7 @@ const selectItem = () => {
 const disableAllOptions = boolValue => {
     document.querySelectorAll(".option-field input").forEach(inputField => {
         inputField.disabled = boolValue;
+        inputField.value = "";
     });
     document.querySelectorAll(".option-field button").forEach(button => {
         button.disabled = boolValue;
