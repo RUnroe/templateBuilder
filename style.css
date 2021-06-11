@@ -20,7 +20,7 @@ html, body {
     padding:0;
     background-color: var(--color-body);
     color:var(--color-text-primary);
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family:'Montserrat', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -217,8 +217,15 @@ button.btn:disabled {
     z-index: 10;
     width:100%;
     height:100%;
-    background-color: #000a;
 
+}
+
+.modal .screen {
+    position: absolute;
+    z-index: 20;
+    width:100%;
+    height:100%;
+    background-color: #000a;
 }
 .modal .container {
     position:absolute;
@@ -236,7 +243,14 @@ button.btn:disabled {
     overflow: hidden;
     /* overflow-x:hidden; */
 }
-
+#modalHeader {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 1rem;
+}
 #modalBody {
     overflow-x: hidden;
     height:90%;

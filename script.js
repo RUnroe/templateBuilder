@@ -293,7 +293,6 @@ const createJsElement = (element, parentName) => {
 
 
 const setNewElementModal = (location, isNestedFlag) => {
-    const modalHeader = "Select Element Type";
     const modalBody = document.getElementById("modalBody");
     elementTypes.forEach(obj => {
         const modalSection = document.createElement("div");
@@ -329,7 +328,18 @@ const setNewElementModal = (location, isNestedFlag) => {
         modalBody.appendChild(modalSection);
     });
 
-    document.getElementById("modalHeader").innerHTML = `<h2>${modalHeader}</h2>`;
+
+    const modalHeader = document.createElement("h2");
+    modalHeader.innerHTML = "Select Element Type";
+    document.getElementById("modalHeader").appendChild(modalHeader);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete");
+    deleteBtn.innerHTML = "&times;";
+    deleteBtn.addEventListener("click", () => {
+        closeModal();
+    });
+    document.getElementById("modalHeader").appendChild(deleteBtn);
     
 }
 
@@ -352,7 +362,8 @@ const showModal = () => {
 const closeModal = () => {
     if(!document.getElementById("modal").classList.contains("hidden")) {
         document.getElementById("modal").classList.add("hidden");
-        //clear modal body
+        //clear modal
+        document.getElementById("modalHeader").innerHTML = "";  
         document.getElementById("modalBody").innerHTML = "";  
     }
 }
@@ -369,6 +380,10 @@ document.getElementById("exportHTML").addEventListener("click", () => {
 
 document.getElementById("exportJS").addEventListener("click", () => {
     exportToJS();
+});
+
+document.getElementById("modalScreen").addEventListener("click", () => {
+    closeModal();
 });
 
 createOptions();
