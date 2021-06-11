@@ -7,7 +7,7 @@
     --color-primary-dark: #5e1fdb;
     --color-secondary: #36a1f8; */
     --color-text-primary: #403d52;
-    --color-text-secondary: #928fa5;
+    --color-text-secondary: #aeacb9;
     --color-primary: #403d52;
     --color-primary-light: #57546d;
     --color-primary-dark: #312e41;
@@ -211,4 +211,56 @@ button.btn:disabled {
 
 .modal.hidden {
     display: none;
+}
+.modal {
+    position:fixed;
+    z-index: 10;
+    width:100%;
+    height:100%;
+    background-color: #000a;
+
+}
+.modal .container {
+    position:absolute;
+    transform:translate(-50%, -50%);
+    left:50%;
+    top:50%;
+    width:100%;
+    max-width: 80%;
+    height:100%;
+    max-height: 80%;
+    z-index: 100;
+    background-color: var(--color-body);
+    border-radius: 10px;
+    padding:1rem;
+    overflow: hidden;
+    /* overflow-x:hidden; */
+}
+
+#modalBody {
+    overflow-x: hidden;
+    height:90%;
+}
+
+.modal-body-section > h4 {
+    color:var(--color-text-secondary);
+    text-transform: uppercase;
+    font-size: 1rem;
+    margin: 0.75rem 0;
+}
+
+.element-type-list {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.element-type-list > div {
+    max-width: 6rem;
+    min-width: 6rem;
+    margin:0.5rem 1rem;
+    padding: 1.5rem 1rem;
+    cursor:pointer;
+    text-align: center;
 }

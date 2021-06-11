@@ -46,7 +46,7 @@ const createNewElement = (isNested, tagName) => {
 
     const name = document.createElement("h3");
     name.classList.add("name");
-    name.innerHTML = "Element";
+    name.innerHTML = `Element (${tagName})`;
     name.title = "Click to Edit";
     headerRow.appendChild(name);
     name.addEventListener("click", () => {
@@ -291,33 +291,33 @@ const createJsElement = (element, parentName) => {
 
 
 const setNewElementModal = (location, isNestedFlag) => {
-    let modalHeader;
+    const modalHeader = "Select Element Type";
     const modalBody = document.getElementById("modalBody");
-    // switch(type) {
-    //     case "newElement": 
-            modalHeader = "Select Element Type";
-            elementTypes.forEach(obj => {
-                const modalSection = document.createElement("div");
-                modalSection.classList.add("modal-body-section");
+    elementTypes.forEach(obj => {
+        const modalSection = document.createElement("div");
+        modalSection.classList.add("modal-body-section");
 
-                const sectionHeader = document.createElement("h4");
-                sectionHeader.innerHTML = obj.title;
-                modalSection.appendChild(sectionHeader);
+        const sectionHeader = document.createElement("h4");
+        sectionHeader.innerHTML = obj.title;
+        modalSection.appendChild(sectionHeader);
 
-                const typeList = document.createElement("div");
-                typeList.classList.add("element-type-list");
-                modalSection.appendChild(typeList);
+        const typeList = document.createElement("div");
+        typeList.classList.add("element-type-list");
+        modalSection.appendChild(typeList);
 
-                obj.elementTypes.forEach(type => {
-                    const button = document.createElement("div");
-                    button.innerHTML = type;
-                    button.addEventListener("click", () => {
-                        addElement(location, isNestedFlag, type);
-                    });
-                    typeList.appendChild(button);
-                });
-                modalBody.appendChild(modalSection);
+        obj.elementTypes.forEach(type => {
+            const button = document.createElement("div");
+            button.classList.add("btn");
+            button.classList.add("outline");
+            button.innerHTML = type;
+            button.addEventListener("click", () => {
+                addElement(location, isNestedFlag, type);
+                closeModal();
             });
+            typeList.appendChild(button);
+        });
+        modalBody.appendChild(modalSection);
+    });
     //     break;
     //     case "dataset":
     //         modalHeader = "Dataset";
@@ -333,11 +333,12 @@ const setNewElementModal = (location, isNestedFlag) => {
 }
 
 
-const showModal = (modalType, isNestedFlag) => {
+const showModal = () => {
     if(document.getElementById("modal").classList.contains("hidden"))  document.getElementById("modal").classList.remove("hidden");
-
 }
-
+const closeModal = () => {
+    if(!document.getElementById("modal").classList.contains("hidden"))  document.getElementById("modal").classList.add("hidden");
+}
 
 document.getElementById("addElement").addEventListener("click", () => {
     setNewElementModal("topLevel", false);
