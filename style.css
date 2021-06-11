@@ -7,7 +7,7 @@
     --color-primary-dark: #5e1fdb;
     --color-secondary: #36a1f8; */
     --color-text-primary: #403d52;
-    --color-text-secondary: #aeacb9;
+    --color-text-secondary: #c0bfc7;
     --color-primary: #403d52;
     --color-primary-light: #57546d;
     --color-primary-dark: #312e41;
@@ -242,12 +242,30 @@ button.btn:disabled {
     height:90%;
 }
 
-.modal-body-section > h4 {
+.modal-section-header {
+    display:flex;
+    flex-direction: row;
+    margin: 0.75rem 0;
+    align-items: center;
+}
+
+.modal-section-header > h4 {
     color:var(--color-text-secondary);
     text-transform: uppercase;
-    font-size: 1rem;
-    margin: 0.75rem 0;
+    font-size: 0.9rem;
+    margin: 0;
 }
+
+.modal-section-header > hr {
+    background-color: var(--color-text-secondary);
+    width:100%;
+    display:inline-block;
+    margin: 0 0.5rem;
+    height:1px;
+    border:none;
+}
+
+
 
 .element-type-list {
     display:flex;

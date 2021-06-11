@@ -299,8 +299,16 @@ const setNewElementModal = (location, isNestedFlag) => {
         const modalSection = document.createElement("div");
         modalSection.classList.add("modal-body-section");
 
-        const sectionHeader = document.createElement("h4");
-        sectionHeader.innerHTML = obj.title;
+        const sectionHeader = document.createElement("div");
+        sectionHeader.classList.add("modal-section-header");
+
+            const sectionTitle = document.createElement("h4");
+            sectionTitle.innerHTML = obj.title;
+            sectionHeader.appendChild(sectionTitle);
+
+            const rule = document.createElement("hr");
+            sectionHeader.appendChild(rule);
+
         modalSection.appendChild(sectionHeader);
 
         const typeList = document.createElement("div");
