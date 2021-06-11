@@ -17,22 +17,23 @@ const textFields = [
 ];
 
 const elementTypes = [
-  {title: "Text", elementTypes: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span"]},
+  {title: "Text",      elementTypes: ["p", "h1", "h2", "h3", "h4", "h5", "h6", "span", "a", "input"]},
   {title: "Container", elementTypes: ["div", "header", "footer", "section", "article"]},
-  {title: null, }
+  {title: "Form",      elementTypes: ["form", "input", "label"]},
+  {title: "Other",     elementTypes: ["img", "button"]}
 ];
 
 
 
-const addElement = (location, isNested) => {
+const addElement = (location, isNested, tagName) => {
     // document.getElementById(location).appendChild(createNewElement(isNested));
-    document.getElementById(location).getElementsByClassName("children")[0].appendChild(createNewElement(isNested));
+    document.getElementById(location).getElementsByClassName("children")[0].appendChild(createNewElement(isNested, tagName));
     selectItem();
 }
 
-const createNewElement = isNested => {
+const createNewElement = (isNested, tagName) => {
     const container = document.createElement("div");
-    container.dataset.tagName = "div"; //temporary;
+    container.dataset.tagName = tagName;
     container.classList.add("element-item");
     if(isNested) container.classList.add("nested");
     container.id = `item${id++}`;
@@ -72,7 +73,10 @@ const createNewElement = isNested => {
     nestBtn.innerHTML = "+";
     nestBtn.title = "Add Element";
     nestBtn.addEventListener("click", () => {
-        addElement(container.id, true);
+        
+        setNewElementModal(container.id, true);
+        showModal();
+        //addElement(container.id, true);
     });
 
     container.appendChild(headerRow);
@@ -286,31 +290,59 @@ const createJsElement = (element, parentName) => {
 }
 
 
-const setModal = (type) => {
-    let modalHeader, modalBody;
-    switch(type) {
-        case "newElement": 
-            modalHeader = "Select Element Type"
-            modalBody
-        break;
-        case "dataset":
-            modalHeader = "Dataset";
+const setNewElementModal = (location, isNestedFlag) => {
+    let modalHeader;
+    const modalBody = document.getElementById("modalBody");
+    // switch(type) {
+    //     case "newElement": 
+            modalHeader = "Select Element Type";
+            elementTypes.forEach(obj => {
+                const modalSection = document.createElement("div");
+                modalSection.classList.add("modal-body-section");
 
-        break;
-        case "eventListener":
-            modalHeader = "Event Listeners"
+                const sectionHeader = document.createElement("h4");
+                sectionHeader.innerHTML = obj.title;
+                modalSection.appendChild(sectionHeader);
 
-        break;
-    }
+                const typeList = document.createElement("div");
+                typeList.classList.add("element-type-list");
+                modalSection.appendChild(typeList);
+
+                obj.elementTypes.forEach(type => {
+                    const button = document.createElement("div");
+                    button.innerHTML = type;
+                    button.addEventListener("click", () => {
+                        addElement(location, isNestedFlag, type);
+                    });
+                    typeList.appendChild(button);
+                });
+                modalBody.appendChild(modalSection);
+            });
+    //     break;
+    //     case "dataset":
+    //         modalHeader = "Dataset";
+
+    //     break;
+    //     case "eventListener":
+    //         modalHeader = "Event Listeners";
+
+    //     break;
+    // }
     document.getElementById("modalHeader").innerHTML = `<h2>${modalHeader}</h2>`;
-    document.getElementById("modalBody").innerHTML = modalBody;
     
 }
 
 
+const showModal = (modalType, isNestedFlag) => {
+    if(document.getElementById("modal").classList.contains("hidden"))  document.getElementById("modal").classList.remove("hidden");
+
+}
+
 
 document.getElementById("addElement").addEventListener("click", () => {
-    addElement("topLevel", false);
+    setNewElementModal("topLevel", false);
+    showModal();
+    //addElement("topLevel", false);
 });
 
 document.getElementById("exportHTML").addEventListener("click", () => {

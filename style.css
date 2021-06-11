@@ -52,6 +52,7 @@ body {
 
 }
 
+
 .sidebar {
     grid-area: side;
     box-sizing: border-box;
@@ -205,4 +206,9 @@ button.btn:disabled {
     width:60%;
     margin: 0.5rem auto;
     display:block;
+}
+
+
+.modal.hidden {
+    display: none;
 }
